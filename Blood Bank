@@ -1,0 +1,369 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #c2185b; /* Main Pink/Maroon Theme */
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background: #2b1d3d; /* Dark Navy from Image */
+    padding: 15px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.logo { font-size: 24px; font-weight: 700; color: #ff4081; }
+.logo span { font-weight: 300; color: white; }
+
+.navbar ul { display: flex; list-style: none; }
+.navbar ul li a {
+    margin-left: 25px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.navbar ul li a:hover { color: white; }
+
+/* Page Control */
+.page { display: none; padding: 40px 8%; flex: 1; }
+.page.active { display: block; animation: fadeIn 0.5s ease; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Home Section (Based on your Image) */
+.hero-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.hero-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Illustration Box (Left) */
+.hero-left { flex: 1.2; }
+.clipboard {
+    background: white;
+    width: 260px;
+    padding: 25px;
+    border-radius: 15px;
+    border: 4px solid #2b1d3d;
+    position: relative;
+}
+
+.clip {
+    width: 60px; height: 12px; background: #555;
+    position: absolute; top: -8px; left: 50%;
+    transform: translateX(-50%); border-radius: 5px;
+}
+
+.cb-title { font-size: 14px; font-weight: 800; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.cb-list p { font-size: 11px; font-weight: 700; margin: 5px 0; }
+.cb-list span { float: right; color: #c2185b; }
+.cb-btn { background: #3f316d; color: white; text-align: center; font-size: 10px; padding: 6px; border-radius: 20px; margin: 15px 0; }
+.cb-footer { border-top: 1px solid #eee; padding-top: 10px; font-size: 9px; font-weight: bold; }
+
+.impact-dots { display: flex; gap: 5px; margin-top: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.red { background: red; } .gold { background: gold; } .star { background: #333; }
+
+/* Text Card (Right) */
+.hero-right { flex: 1; }
+.text-card {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.text-card h1 { font-size: 55px; color: #4a0e2e; line-height: 1; margin-bottom: 10px; }
+.text-card p { font-size: 20px; color: #666; margin-bottom: 30px; }
+.learn-btn {
+    background: #1a0b3b; color: white; border: none;
+    padding: 15px 35px; border-radius: 50px;
+    font-weight: bold; cursor: pointer;
+}
+
+/* Forms & Cards */
+h2 { text-align: center; color: white; margin-bottom: 20px; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
+.card { background: white; max-width: 450px; margin: 0 auto; padding: 30px; border-radius: 20px; }
+input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+.btn { width: 100%; background: #2b1d3d; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+/* Footer */
+.footer {
+    background: #2b1d3d; color: #999;
+    padding: 20px 8%; display: flex;
+    justify-content: space-between; font-size: 12px;
+}
+.footer-links a { color: #999; text-decoration: none; margin-right: 20px; }
+
+/* Responsive */
+@media (max-width: 850px) {
+    .hero-wrapper { flex-direction: column; text-align: center; }
+    .hero-left { margin-bottom: 40px; }
+    .text-card h1 { font-size: 40px; }
+}
+
+/* --- About Page Styles (Based on Screenshot) --- */
+
+.about-container {
+    background: white;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 50px;
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+.about-main-title {
+    color: #000;
+    font-size: 28px;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: none; /* Removing default glow */
+}
+
+.mission-text {
+    font-size: 16px;
+    color: #000;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.info-box {
+    background: #fdf2f7; /* Very light pink background */
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+}
+
+/* Specific Pink Border from Image */
+.pink-border {
+    border-left: 8px solid #c2185b;
+}
+
+.info-box h3 {
+    color: #c2185b;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.info-box p {
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.quote-text {
+    color: #c2185b;
+    font-style: italic;
+    font-weight: 700;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Navbar Link & Footer Alignment */
+.footer-links a { cursor: pointer; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .about-container { padding: 30px 20px; }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSaver - Blood Donation</title>
+    <link rel="stylesheet" href="blood.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Life<span>Saver</span></div>
+    <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('donate')">Donate</a></li>
+        <li><a onclick="showPage('search')">Search</a></li>
+        <li><a onclick="showPage('admin')">Admin</a></li>
+    </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <div class="hero-container">
+        <div class="hero-wrapper">
+            
+            <!-- Left Side Illustration Mockup -->
+            <div class="hero-left">
+                <div class="illustration-box">
+                    <div class="clipboard">
+                        <div class="clip"></div>
+                        <p class="cb-title">HEALTH CHECK</p>
+                        <div class="cb-list">
+                            <p>HEART <span>✓</span></p>
+                            <p>LIVER <span>✓</span></p>
+                            <p>BLOOD PRESSURE <span>✓</span></p>
+                        </div>
+                        <div class="cb-btn">DONATE</div>
+                        <div class="cb-footer">
+                            <p>FINAL MEDICAL REVIEW <span>✓</span></p>
+                            <p>DONATION IMPACT</p>
+                            <div class="impact-dots">
+                                <span class="dot red"></span>
+                                <span class="dot gold"></span>
+                                <span class="dot star"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Text Card -->
+            <div class="hero-right">
+                <div class="text-card">
+                    <h1>Give Blood <br>Save Life</h1>
+                    <p>Your donation saves lives</p>
+                    <button class="learn-btn" onclick="showPage('about')">LEARN MORE</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- DONATE -->
+<div id="donate" class="page">
+    <h2>Donor Registration</h2>
+    <div class="card">
+        <input type="text" placeholder="Full Name">
+        <select>
+            <option>Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+            <option>A-</option><option>B-</option><option>O-</option>
+            <option>AB+</option><option>AB-</option>
+        </select>
+        <input type="date">
+        <select>
+            <option>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+        <input type="email" placeholder="Email">
+        <input type="tel" placeholder="Phone">
+        <button class="btn">Register</button>
+    </div>
+</div>
+
+<!-- SEARCH -->
+<div id="search" class="page">
+    <h2>Find Donor</h2>
+    <div class="card">
+        <select>
+            <option>Select Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+        </select>
+        <button class="btn">Search</button>
+    </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+    <h2>Admin Login</h2>
+    <div class="card">
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="btn">Login</button>
+    </div>
+</div>
+<!-- ABOUT PAGE (Updated to match your Image) -->
+<div id="about" class="page">
+    <div class="about-container">
+        <h2 class="about-main-title">About Our Blood Bank</h2>
+        
+        <p class="mission-text">
+            <strong>আমাদের লক্ষ্য:</strong> জীবন বাঁচাতে রক্তের প্রয়োজনে মানুষের পাশে দাঁড়ানো, <br>আপনার এক ব্যাগ রক্ত হতে পারে কারো বেঁচে থাকার শেষ আশা।</br>
+        </p>
+
+        <div class="info-grid">
+            <!-- কেন রক্ত দেবেন? -->
+            <div class="info-box pink-border">
+                <h3>কেন রক্ত দেবেন?</h3>
+                <p>রক্তদান করলে রক্তদাতার শরীরের হৃদরোগ ও স্ট্রোকের ঝুঁকি কমে এবং নতুন রক্তকণিকা তৈরি হয়। এটি একটি মহৎ কাজ যা সরাসরি মানুষের জীবন বাঁচায়।</p>
+            </div>
+
+            <!-- কারা রক্ত দিতে পারবে? -->
+            <div class="info-box pink-border">
+                <h3>কারা রক্ত দিতে পারবে?</h3>
+                <p>১৮ থেকে ৬০ বছর বয়সী সুস্থ মানুষ, যাদের ওজন কমপক্ষে ৫০ কেজি, তারা প্রতি ৩ মাস অন্তর রক্ত দিতে পারেন। কোনো দীর্ঘমেয়াদী রোগ থাকলে ডাক্তারের পরামর্শ নিন।</p>
+            </div>
+        </div>
+
+        <p class="quote-text">
+            "রক্ত দিন, জীবন বাঁচান - আপনার একটি মহৎ কাজ আরেকজনের মুখে হাসি ফোটাতে পারে।"
+        </p>
+        
+        <!-- Back Button -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" style="width: 150px;" onclick="showPage('home')">Back</button>
+        </div>
+    </div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div class="copy">© 2026 LifeSaver Org. All Rights Reserved.</div>
+</footer>
+
+<script>
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(pageId).classList.add("active");
+}
+</script>
+
+</body>
+</html>
