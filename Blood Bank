@@ -1,3 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSaver - Blood Donation</title>
+    <link rel="stylesheet" href="blood.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Life<span>Saver</span></div>
+    <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('donate')">Donate</a></li>
+        <li><a onclick="showPage('search')">Search</a></li>
+        <li><a onclick="showPage('admin')">Admin</a></li>
+    </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <div class="hero-container">
+        <div class="hero-wrapper">
+            
+            <!-- Left Side Illustration Mockup -->
+            <div class="hero-left">
+                <div class="illustration-box">
+                    <div class="clipboard">
+                        <div class="clip"></div>
+                        <p class="cb-title">HEALTH CHECK</p>
+                        <div class="cb-list">
+                            <p>HEART <span>✓</span></p>
+                            <p>LIVER <span>✓</span></p>
+                            <p>BLOOD PRESSURE <span>✓</span></p>
+                        </div>
+                        <div class="cb-btn">DONATE</div>
+                        <div class="cb-footer">
+                            <p>FINAL MEDICAL REVIEW <span>✓</span></p>
+                            <p>DONATION IMPACT</p>
+                            <div class="impact-dots">
+                                <span class="dot red"></span>
+                                <span class="dot gold"></span>
+                                <span class="dot star"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Text Card -->
+            <div class="hero-right">
+                <div class="text-card">
+                    <h1>Give Blood <br>Save Life</h1>
+                    <p>Your donation saves lives</p>
+                    <button class="learn-btn" onclick="showPage('about')">LEARN MORE</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- DONATE -->
+<div id="donate" class="page">
+    <h2>Donor Registration</h2>
+    <div class="card">
+        <input type="text" placeholder="Full Name">
+        <select>
+            <option>Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+            <option>A-</option><option>B-</option><option>O-</option>
+            <option>AB+</option><option>AB-</option>
+        </select>
+        <input type="date">
+        <select>
+            <option>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+        <input type="email" placeholder="Email">
+        <input type="tel" placeholder="Phone">
+        <button class="btn">Register</button>
+    </div>
+</div>
+
+<!-- SEARCH -->
+<div id="search" class="page">
+    <h2>Find Donor</h2>
+    <div class="card">
+        <select>
+            <option>Select Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+        </select>
+        <button class="btn">Search</button>
+    </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+    <h2>Admin Login</h2>
+    <div class="card">
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="btn">Login</button>
+    </div>
+</div>
+<!-- ABOUT PAGE (Updated to match your Image) -->
+<div id="about" class="page">
+    <div class="about-container">
+        <h2 class="about-main-title">About Our Blood Bank</h2>
+        
+        <p class="mission-text">
+            <strong>আমাদের লক্ষ্য:</strong> জীবন বাঁচাতে রক্তের প্রয়োজনে মানুষের পাশে দাঁড়ানো, <br>আপনার এক ব্যাগ রক্ত হতে পারে কারো বেঁচে থাকার শেষ আশা।</br>
+        </p>
+
+        <div class="info-grid">
+            <!-- কেন রক্ত দেবেন? -->
+            <div class="info-box pink-border">
+                <h3>কেন রক্ত দেবেন?</h3>
+                <p>রক্তদান করলে রক্তদাতার শরীরের হৃদরোগ ও স্ট্রোকের ঝুঁকি কমে এবং নতুন রক্তকণিকা তৈরি হয়। এটি একটি মহৎ কাজ যা সরাসরি মানুষের জীবন বাঁচায়।</p>
+            </div>
+
+            <!-- কারা রক্ত দিতে পারবে? -->
+            <div class="info-box pink-border">
+                <h3>কারা রক্ত দিতে পারবে?</h3>
+                <p>১৮ থেকে ৬০ বছর বয়সী সুস্থ মানুষ, যাদের ওজন কমপক্ষে ৫০ কেজি, তারা প্রতি ৩ মাস অন্তর রক্ত দিতে পারেন। কোনো দীর্ঘমেয়াদী রোগ থাকলে ডাক্তারের পরামর্শ নিন।</p>
+            </div>
+        </div>
+
+        <p class="quote-text">
+            "রক্ত দিন, জীবন বাঁচান - আপনার একটি মহৎ কাজ আরেকজনের মুখে হাসি ফোটাতে পারে।"
+        </p>
+        
+        <!-- Back Button -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" style="width: 150px;" onclick="showPage('home')">Back</button>
+        </div>
+    </div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div class="copy">© 2026 LifeSaver Org. All Rights Reserved.</div>
+</footer>
+
+<script>
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(pageId).classList.add("active");
+}
+</script>
+
+</body>
+</html>
+// --- REGISTRATION LOGIC (Donor & Hospital) ---
+
+// Donor Registration Form
+const donorForm = document.getElementById('donorForm');
+if (donorForm) {
+    donorForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            donor_name: document.getElementById('name').value,
+            blood_type: document.getElementById('bloodGroup').value,
+            contact_no: document.getElementById('phone').value,
+            dob: document.getElementById('dob').value,
+            gender: document.getElementById('gender').value
+        };
+        sendData('http://localhost:5000/register-donor', data);
+    });
+}
+
+// Hospital Registration Form
+const hospitalForm = document.getElementById('hospitalForm');
+if (hospitalForm) {
+    hospitalForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            hospital_name: document.getElementById('hName').value,
+            address: document.getElementById('hAddress').value,
+            contact_number: document.getElementById('hContact').value
+        };
+        sendData('http://localhost:5000/add-hospital', data);
+    });
+}
+
+// --- DONOR SEARCH LOGIC ---
+
+function searchDonor() {
+    const bg = document.getElementById('searchBloodGroup').value;
+    const resultsDiv = document.getElementById('searchResults');
+
+    if (!bg) {
+        alert("Please select a blood group first!");
+        return;
+    }
+
+    fetch(`http://localhost:5000/search-donor?blood_type=${encodeURIComponent(bg)}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.length === 0) {
+            resultsDiv.innerHTML = "<p style='color:red;'>No donors found for this group.</p>";
+            return;
+        }
+
+        let tableHTML = `
+            <table border="1" style="width:100%; margin-top:20px; border-collapse: collapse; text-align: left;">
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 10px;">Name</th>
+                    <th style="padding: 10px;">Blood Group</th>
+                    <th style="padding: 10px;">Contact</th>
+                    <th style="padding: 10px;">Gender</th>
+                </tr>
+        `;
+
+        data.forEach(donor => {
+            tableHTML += `
+                <tr>
+                    <td style="padding: 10px;">${donor.donor_name}</td>
+                    <td style="padding: 10px;">${donor.blood_type}</td>
+                    <td style="padding: 10px;">${donor.contact_number}</td>
+                    <td style="padding: 10px;">${donor.gender}</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += '</table>';
+        resultsDiv.innerHTML = tableHTML;
+    })
+    .catch(err => {
+        console.error("Search Error:", err);
+        alert("Server connection failed!");
+    });
+}
+
+// --- ADMIN LOGIN & INVENTORY LOGIC ---
+
+function login() {
+    const user = document.getElementById('adminUser').value;
+    const pass = document.getElementById('adminPass').value;
+
+    // Hardcoded Admin Credentials
+    if (user === "admin" && pass === "1234") {
+        alert("Login Successful! Loading Blood Inventory...");
+        loadInventory(); 
+    } else {
+        alert("Invalid Username or Password!");
+    }
+}
+
+function loadInventory() {
+    const inventoryDiv = document.getElementById('inventoryTable');
+    
+    fetch('http://localhost:5000/get-inventory')
+    .then(res => res.json())
+    .then(data => {
+        let html = `
+            <h3>Blood Bank Inventory</h3>
+            <table border="1" style="width:100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
+                <tr style="background-color: #e74c3c; color: white;">
+                    <th style="padding: 10px;">Blood Group</th>
+                    <th style="padding: 10px;">Bags Available</th>
+                </tr>
+        `;
+        
+        data.forEach(item => {
+            html += `
+                <tr>
+                    <td style="padding: 10px;">${item.blood_group}</td>
+                    <td style="padding: 10px;">${item.bag_count}</td>
+                </tr>
+            `;
+        });
+        
+        html += '</table>';
+        inventoryDiv.innerHTML = html;
+    })
+    .catch(err => {
+        console.error("Inventory Error:", err);
+        alert("Could not load inventory!");
+    });
+}
+
+// --- UTILITY FUNCTIONS ---
+
+function sendData(url, payload) {
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        location.reload(); 
+    })
+    .catch(err => {
+        console.error("Connection Error:", err);
+        alert("Server start kora nai! Terminal e 'node server.js' likhun.");
+    });
+}
+const express = require('express');
+const mysql = require('mysql');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "blood_bank_db"
+});
+
+db.connect(err => {
+    if (err) {
+        console.log("XAMPP MySQL connect hoyni! XAMPP chalu ache toh?");
+    } else {
+        console.log("Database Connected Successfully!");
+    }
+});
+
+// --- DONOR API ---
+app.post('/register-donor', (req, res) => {
+    const { donor_name, blood_type, contact_no, dob, gender } = req.body;
+    const sql = "INSERT INTO donors (donor_name, blood_type, contact_number, dob, gender) VALUES (?, ?, ?, ?, ?)";
+    
+    db.query(sql, [donor_name, blood_type, contact_no, dob, gender], (err, result) => {
+        if (err) return res.status(500).send(err.message);
+        
+        // Donor register hole inventory-te oi group-er 1 bag auto bere jabe
+        const updateStock = "UPDATE inventory SET bag_count = bag_count + 1 WHERE blood_group = ?";
+        db.query(updateStock, [blood_type], (err2) => {
+            if (err2) console.log("Inventory update failed:", err2.message);
+            res.send("Donor Registered and Inventory Updated!");
+        });
+    });
+});
+
+// --- HOSPITAL API ---
+app.post('/add-hospital', (req, res) => {
+    const { hospital_name, address, contact_number } = req.body;
+    const sql = "INSERT INTO hospital (hospital_name, address, contact_number) VALUES (?, ?, ?)";
+    db.query(sql, [hospital_name, address, contact_number], (err, result) => {
+        if (err) return res.status(500).send(err.message);
+        res.send("Hospital Added Successfully!");
+    });
+});
+
+// --- INVENTORY API ---
+app.get('/get-inventory', (req, res) => {
+    const sql = "SELECT * FROM inventory";
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("Inventory error:", err.message);
+            return res.status(500).send(err.message);
+        }
+        res.json(result);
+    });
+});
+
+// --- DONOR SEARCH API ---
+app.get('/search-donor', (req, res) => {
+    const bloodType = req.query.blood_type;
+    const sql = "SELECT * FROM donors WHERE blood_type = ?";
+    db.query(sql, [bloodType], (err, result) => {
+        if (err) return res.status(500).send(err.message);
+        res.json(result);
+    });
+});
+
+// Server Start
+app.listen(5000, () => console.log("Server running on http://localhost:5000"));
 /* Base Styles */
 * {
     margin: 0;
@@ -206,164 +588,3 @@ input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #d
     .info-grid { grid-template-columns: 1fr; }
     .about-container { padding: 30px 20px; }
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeSaver - Blood Donation</title>
-    <link rel="stylesheet" href="blood.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-    <div class="logo">Life<span>Saver</span></div>
-    <ul>
-        <li><a onclick="showPage('home')">Home</a></li>
-        <li><a onclick="showPage('donate')">Donate</a></li>
-        <li><a onclick="showPage('search')">Search</a></li>
-        <li><a onclick="showPage('admin')">Admin</a></li>
-    </ul>
-</nav>
-
-<!-- HOME PAGE -->
-<div id="home" class="page active">
-    <div class="hero-container">
-        <div class="hero-wrapper">
-            
-            <!-- Left Side Illustration Mockup -->
-            <div class="hero-left">
-                <div class="illustration-box">
-                    <div class="clipboard">
-                        <div class="clip"></div>
-                        <p class="cb-title">HEALTH CHECK</p>
-                        <div class="cb-list">
-                            <p>HEART <span>✓</span></p>
-                            <p>LIVER <span>✓</span></p>
-                            <p>BLOOD PRESSURE <span>✓</span></p>
-                        </div>
-                        <div class="cb-btn">DONATE</div>
-                        <div class="cb-footer">
-                            <p>FINAL MEDICAL REVIEW <span>✓</span></p>
-                            <p>DONATION IMPACT</p>
-                            <div class="impact-dots">
-                                <span class="dot red"></span>
-                                <span class="dot gold"></span>
-                                <span class="dot star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Side Text Card -->
-            <div class="hero-right">
-                <div class="text-card">
-                    <h1>Give Blood <br>Save Life</h1>
-                    <p>Your donation saves lives</p>
-                    <button class="learn-btn" onclick="showPage('about')">LEARN MORE</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- DONATE -->
-<div id="donate" class="page">
-    <h2>Donor Registration</h2>
-    <div class="card">
-        <input type="text" placeholder="Full Name">
-        <select>
-            <option>Blood Group</option>
-            <option>A+</option><option>B+</option><option>O+</option>
-            <option>A-</option><option>B-</option><option>O-</option>
-            <option>AB+</option><option>AB-</option>
-        </select>
-        <input type="date">
-        <select>
-            <option>Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-        </select>
-        <input type="email" placeholder="Email">
-        <input type="tel" placeholder="Phone">
-        <button class="btn">Register</button>
-    </div>
-</div>
-
-<!-- SEARCH -->
-<div id="search" class="page">
-    <h2>Find Donor</h2>
-    <div class="card">
-        <select>
-            <option>Select Blood Group</option>
-            <option>A+</option><option>B+</option><option>O+</option>
-        </select>
-        <button class="btn">Search</button>
-    </div>
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="page">
-    <h2>Admin Login</h2>
-    <div class="card">
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button class="btn">Login</button>
-    </div>
-</div>
-<!-- ABOUT PAGE (Updated to match your Image) -->
-<div id="about" class="page">
-    <div class="about-container">
-        <h2 class="about-main-title">About Our Blood Bank</h2>
-        
-        <p class="mission-text">
-            <strong>আমাদের লক্ষ্য:</strong> জীবন বাঁচাতে রক্তের প্রয়োজনে মানুষের পাশে দাঁড়ানো, <br>আপনার এক ব্যাগ রক্ত হতে পারে কারো বেঁচে থাকার শেষ আশা।</br>
-        </p>
-
-        <div class="info-grid">
-            <!-- কেন রক্ত দেবেন? -->
-            <div class="info-box pink-border">
-                <h3>কেন রক্ত দেবেন?</h3>
-                <p>রক্তদান করলে রক্তদাতার শরীরের হৃদরোগ ও স্ট্রোকের ঝুঁকি কমে এবং নতুন রক্তকণিকা তৈরি হয়। এটি একটি মহৎ কাজ যা সরাসরি মানুষের জীবন বাঁচায়।</p>
-            </div>
-
-            <!-- কারা রক্ত দিতে পারবে? -->
-            <div class="info-box pink-border">
-                <h3>কারা রক্ত দিতে পারবে?</h3>
-                <p>১৮ থেকে ৬০ বছর বয়সী সুস্থ মানুষ, যাদের ওজন কমপক্ষে ৫০ কেজি, তারা প্রতি ৩ মাস অন্তর রক্ত দিতে পারেন। কোনো দীর্ঘমেয়াদী রোগ থাকলে ডাক্তারের পরামর্শ নিন।</p>
-            </div>
-        </div>
-
-        <p class="quote-text">
-            "রক্ত দিন, জীবন বাঁচান - আপনার একটি মহৎ কাজ আরেকজনের মুখে হাসি ফোটাতে পারে।"
-        </p>
-        
-        <!-- Back Button -->
-        <div style="text-align: center; margin-top: 30px;">
-            <button class="btn" style="width: 150px;" onclick="showPage('home')">Back</button>
-        </div>
-    </div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer-links">
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a href="#">Privacy Policy</a>
-    </div>
-    <div class="copy">© 2026 LifeSaver Org. All Rights Reserved.</div>
-</footer>
-
-<script>
-function showPage(pageId) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.getElementById(pageId).classList.add("active");
-}
-</script>
-
-</body>
-</html>
