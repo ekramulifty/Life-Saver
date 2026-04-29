@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSaver - Blood Donation</title>
+    <link rel="stylesheet" href="blood.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Life<span>Saver</span></div>
+    <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('donate')">Donate</a></li>
+        <li><a onclick="showPage('search')">Search</a></li>
+        <li><a onclick="showPage('admin')">Admin</a></li>
+    </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <div class="hero-container">
+        <div class="hero-wrapper">
+            
+            <!-- Left Side Illustration Mockup -->
+            <div class="hero-left">
+                <div class="illustration-box">
+                    <div class="clipboard">
+                        <div class="clip"></div>
+                        <p class="cb-title">HEALTH CHECK</p>
+                        <div class="cb-list">
+                            <p>HEART <span>✓</span></p>
+                            <p>LIVER <span>✓</span></p>
+                            <p>BLOOD PRESSURE <span>✓</span></p>
+                        </div>
+                        <div class="cb-btn">DONATE</div>
+                        <div class="cb-footer">
+                            <p>FINAL MEDICAL REVIEW <span>✓</span></p>
+                            <p>DONATION IMPACT</p>
+                            <div class="impact-dots">
+                                <span class="dot red"></span>
+                                <span class="dot gold"></span>
+                                <span class="dot star"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Text Card -->
+            <div class="hero-right">
+                <div class="text-card">
+                    <h1>Give Blood <br>Save Life</h1>
+                    <p>Your donation saves lives</p>
+                    <button class="learn-btn" onclick="showPage('about')">LEARN MORE</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- DONATE -->
+<div id="donate" class="page">
+    <h2>Donor Registration</h2>
+    <div class="card">
+        <input type="text" placeholder="Full Name">
+        <select>
+            <option>Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+            <option>A-</option><option>B-</option><option>O-</option>
+            <option>AB+</option><option>AB-</option>
+        </select>
+        <input type="date">
+        <select>
+            <option>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+        <input type="email" placeholder="Email">
+        <input type="tel" placeholder="Phone">
+        <button class="btn">Register</button>
+    </div>
+</div>
+
+<!-- SEARCH -->
+<div id="search" class="page">
+    <h2>Find Donor</h2>
+    <div class="card">
+        <select>
+            <option>Select Blood Group</option>
+            <option>A+</option><option>B+</option><option>O+</option>
+        </select>
+        <button class="btn">Search</button>
+    </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+    <h2>Admin Login</h2>
+    <div class="card">
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="btn">Login</button>
+    </div>
+</div>
+<!-- ABOUT PAGE (Updated to match your Image) -->
+<div id="about" class="page">
+    <div class="about-container">
+        <h2 class="about-main-title">About Our Blood Bank</h2>
+        
+        <p class="mission-text">
+            <strong>আমাদের লক্ষ্য:</strong> জীবন বাঁচাতে রক্তের প্রয়োজনে মানুষের পাশে দাঁড়ানো, <br>আপনার এক ব্যাগ রক্ত হতে পারে কারো বেঁচে থাকার শেষ আশা।</br>
+        </p>
+
+        <div class="info-grid">
+            <!-- কেন রক্ত দেবেন? -->
+            <div class="info-box pink-border">
+                <h3>কেন রক্ত দেবেন?</h3>
+                <p>রক্তদান করলে রক্তদাতার শরীরের হৃদরোগ ও স্ট্রোকের ঝুঁকি কমে এবং নতুন রক্তকণিকা তৈরি হয়। এটি একটি মহৎ কাজ যা সরাসরি মানুষের জীবন বাঁচায়।</p>
+            </div>
+
+            <!-- কারা রক্ত দিতে পারবে? -->
+            <div class="info-box pink-border">
+                <h3>কারা রক্ত দিতে পারবে?</h3>
+                <p>১৮ থেকে ৬০ বছর বয়সী সুস্থ মানুষ, যাদের ওজন কমপক্ষে ৫০ কেজি, তারা প্রতি ৩ মাস অন্তর রক্ত দিতে পারেন। কোনো দীর্ঘমেয়াদী রোগ থাকলে ডাক্তারের পরামর্শ নিন।</p>
+            </div>
+        </div>
+
+        <p class="quote-text">
+            "রক্ত দিন, জীবন বাঁচান - আপনার একটি মহৎ কাজ আরেকজনের মুখে হাসি ফোটাতে পারে।"
+        </p>
+        
+        <!-- Back Button -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" style="width: 150px;" onclick="showPage('home')">Back</button>
+        </div>
+    </div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div class="copy">© 2026 LifeSaver Org. All Rights Reserved.</div>
+</footer>
+
+<script>
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(pageId).classList.add("active");
+}
+</script>
+
+</body>
+</html>
