@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloodBank Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c8102e;
+    --red-dark: #8b0a1f;
+    --red-light: #ff3a5c;
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: rgba(200,16,46,0.18);
+    --text: #f0eff4;
+    --muted: #7c7c8a;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --info: #38bdf8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:240px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;}
+  .main{margin-left:240px;flex:1;display:flex;flex-direction:column;}
+
+  .logo{padding:24px 20px;border-bottom:1px solid var(--border);}
+  .logo-mark{display:flex;align-items:center;gap:10px;}
+  .logo-icon{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .logo-text{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:-0.5px;}
+  .logo-text span{color:var(--red-light);}
+
+  .nav{padding:16px 12px;flex:1;}
+  .nav-label{font-size:10px;font-weight:600;letter-spacing:2px;color:var(--muted);padding:0 8px;margin-bottom:8px;margin-top:16px;text-transform:uppercase;}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all 0.2s;color:var(--muted);font-size:14px;font-weight:500;border:1px solid transparent;}
+  .nav-item:hover{background:var(--surface2);color:var(--text);}
+  .nav-item.active{background:rgba(200,16,46,0.12);color:var(--red-light);border-color:var(--border);}
+  .nav-item .icon{font-size:17px;width:20px;text-align:center;}
+
+  .sidebar-footer{padding:16px;border-top:1px solid var(--border);}
+  .user-badge{display:flex;align-items:center;gap:10px;padding:10px;background:var(--surface2);border-radius:8px;}
+  .avatar{width:32px;height:32px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Syne',sans-serif;}
+  .user-info{flex:1;min-width:0;}
+  .user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .user-role{font-size:11px;color:var(--muted);}
+  .logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;}
+  .logout-btn:hover{color:var(--red-light);}
+
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;}
+  .page-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;}
+  .topbar-actions{display:flex;align-items:center;gap:12px;}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+  .btn-primary{background:var(--red);color:#fff;}
+  .btn-primary:hover{background:var(--red-light);}
+  .btn-ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+  .btn-ghost:hover{border-color:var(--red-light);color:var(--red-light);}
+  .btn-danger{background:rgba(200,16,46,0.15);color:var(--red-light);border:1px solid var(--border);}
+  .btn-danger:hover{background:var(--red);color:#fff;}
+  .btn-sm{padding:6px 12px;font-size:12px;}
+
+  .content{padding:28px;flex:1;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;}
+  .stat-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;transform:translate(20px,-20px);}
+  .stat-card.red::before{background:rgba(200,16,46,0.15);}
+  .stat-card.green::before{background:rgba(34,197,94,0.15);}
+  .stat-card.yellow::before{background:rgba(245,158,11,0.15);}
+  .stat-card.blue::before{background:rgba(56,189,248,0.15);}
+  .stat-label{font-size:12px;color:var(--muted);font-weight:500;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;}
+  .stat-value{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;}
+  .stat-card.red .stat-value{color:var(--red-light);}
+  .stat-card.green .stat-value{color:var(--success);}
+  .stat-card.yellow .stat-value{color:var(--warning);}
+  .stat-card.blue .stat-value{color:var(--info);}
+  .stat-sub{font-size:12px;color:var(--muted);margin-top:6px;}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+  .card-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+  .card-body{padding:20px;}
+
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;}
+  th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);}
+  td{padding:13px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,0.02);}
+
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+  .badge-red{background:rgba(200,16,46,0.15);color:var(--red-light);}
+  .badge-green{background:rgba(34,197,94,0.12);color:var(--success);}
+  .badge-yellow{background:rgba(245,158,11,0.12);color:var(--warning);}
+  .badge-blue{background:rgba(56,189,248,0.12);color:var(--info);}
+  .badge-gray{background:var(--surface2);color:var(--muted);}
+
+  .blood-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .blood-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all 0.2s;}
+  .blood-card:hover{border-color:var(--red-light);}
+  .blood-type{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--red-light);}
+  .blood-units{font-size:13px;color:var(--muted);margin-top:6px;}
+  .blood-units span{color:var(--text);font-weight:600;}
+  .blood-bar{height:4px;background:var(--border);border-radius:2px;margin-top:12px;overflow:hidden;}
+  .blood-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.6s ease;}
+  .blood-status{font-size:11px;margin-top:8px;}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-group{display:flex;flex-direction:column;gap:6px;}
+  .form-group.full{grid-column:1/-1;}
+  label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+  input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;}
+  input:focus,select:focus,textarea:focus{border-color:var(--red-light);}
+  select option{background:var(--surface2);}
+
+  .search-box{position:relative;}
+  .search-box input{padding-left:36px;width:220px;}
+  .search-box::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+  .modal-header{padding:22px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+  .modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;}
+  .modal-close:hover{color:var(--red-light);}
+  .modal-body{padding:24px;}
+  .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
+
+  #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;}
+  .login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:400px;text-align:center;}
+  .login-logo{font-size:48px;margin-bottom:16px;}
+  .login-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
+  .login-sub{color:var(--muted);font-size:14px;margin-bottom:32px;}
+  .login-form .form-group{text-align:left;margin-bottom:16px;}
+  .login-error{background:rgba(200,16,46,0.12);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red-light);margin-bottom:16px;display:none;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  .empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
+  .empty-icon{font-size:40px;margin-bottom:12px;}
+
+  .action-btns{display:flex;gap:6px;}
+
+  .toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+  .toast{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:13px;min-width:260px;display:flex;align-items:center;gap:12px;animation:slideIn 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+  .toast.success{border-color:rgba(34,197,94,0.3);}
+  .toast.error{border-color:rgba(200,16,46,0.3);}
+  @keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+  @media(max-width:900px){
+    .sidebar{width:60px;}
+    .sidebar .nav-item span,.sidebar .logo-text,.sidebar .user-info,.sidebar .nav-label{display:none;}
+    .main{margin-left:60px;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .blood-grid{grid-template-columns:1fr 1fr;}
+    .two-col{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Login Screen -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">🩸</div>
+    <div class="login-title">BloodBank Pro</div>
+    <div class="login-sub">Blood Bank Management System</div>
+    <div class="login-error" id="loginError">Invalid username or password</div>
+    <div class="login-form">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUser" placeholder="Enter username" value="admin">
+      </div>
+      <div class="form-group" style="margin-bottom:24px;">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Enter password" value="admin123">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="doLogin()">
+        🔐 Sign In
+      </button>
+      <p style="font-size:12px;color:var(--muted);margin-top:16px;">Default: admin / admin123</p>
+    </div>
+  </div>
+</div>
+
+<!-- App -->
+<div class="app" id="app" style="display:none;">
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">
+        <div class="logo-icon">🩸</div>
+        <div class="logo-text">Blood<span>Bank</span></div>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" onclick="showPage('dashboard')">
+        <span class="icon">📊</span><span>Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="showPage('donors')">
+        <span class="icon">👥</span><span>Donors</span>
+      </div>
+      <div class="nav-item" onclick="showPage('blood-stock')">
+        <span class="icon">🩸</span><span>Blood Stock</span>
+      </div>
+      <div class="nav-label">Manage</div>
+      <div class="nav-item" onclick="showPage('requests')">
+        <span class="icon">📋</span><span>Requests</span>
+      </div>
+      <div class="nav-item" onclick="showPage('history')">
+        <span class="icon">📜</span><span>History</span>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="avatar" id="sidebarAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">Admin</div>
+          <div class="user-role">Administrator</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()" title="Logout">⏻</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="pageTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <div class="search-box">
+          <input type="text" placeholder="Search..." id="globalSearch" oninput="handleSearch()">
+        </div>
+        <button class="btn btn-primary" id="topActionBtn" onclick="openAddModal()">+ Add New</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card red">
+            <div class="stat-label">Total Donors</div>
+            <div class="stat-value" id="stat-donors">0</div>
+            <div class="stat-sub">Registered donors</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Units Available</div>
+            <div class="stat-value" id="stat-units">0</div>
+            <div class="stat-sub">All blood types</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-label">Pending Requests</div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-sub">Awaiting approval</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label">Donations Today</div>
+            <div class="stat-value" id="stat-today">0</div>
+            <div class="stat-sub">Units collected</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Blood Stock Overview</div></div>
+            <div class="card-body">
+              <div class="blood-grid" id="dashBloodGrid" style="grid-template-columns:repeat(4,1fr);gap:10px;"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Recent Requests</div></div>
+            <div class="card-body" style="padding:0;">
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Patient</th><th>Type</th><th>Status</th></tr></thead>
+                  <tbody id="dashRequests"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Recent Donors</div></div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Blood Type</th><th>Last Donation</th><th>Status</th></tr></thead>
+                <tbody id="dashDonors"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DONORS -->
+      <div class="page" id="page-donors">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">All Donors</div>
+            <span class="badge badge-blue" id="donorCount">0 total</span>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>Name</th><th>Blood Type</th><th>Phone</th><th>Last Donation</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="donorsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOOD STOCK -->
+      <div class="page" id="page-blood-stock">
+        <div class="blood-grid" id="bloodStockGrid" style="margin-bottom:24px;"></div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Stock Transactions</div></div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Type</th><th>Blood Group</th><th>Units</th><th>Donor/Patient</th><th>Note</th></tr></thead>
+                <tbody id="stockTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REQUESTS -->
+      <div class="page" id="page-requests">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Blood Requests</div>
+            <span class="badge badge-yellow" id="requestCount">0 total</span>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>Patient</th><th>Blood Type</th><th>Units</th><th>Hospital</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="requestsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div class="page" id="page-history">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Transaction History</div></div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Type</th><th>Blood Group</th><th>Units</th><th>Person</th><th>Note</th></tr></thead>
+                <tbody id="historyTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Donor Modal -->
+<div class="modal-overlay" id="donorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="donorModalTitle">Add New Donor</div>
+      <button class="modal-close" onclick="closeModal('donorModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Full Name *</label><input type="text" id="dName" placeholder="Donor's full name"></div>
+        <div class="form-group"><label>Blood Type *</label>
+          <select id="dBlood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+        </div>
+        <div class="form-group"><label>Phone</label><input type="text" id="dPhone" placeholder="01XXXXXXXXX"></div>
+        <div class="form-group"><label>Age</label><input type="number" id="dAge" placeholder="18-65"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="dEmail" placeholder="email@example.com"></div>
+        <div class="form-group"><label>Last Donation</label><input type="date" id="dLastDonation"></div>
+        <div class="form-group full"><label>Address</label><input type="text" id="dAddress" placeholder="Full address"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('donorModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDonor()">💾 Save Donor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Request Modal -->
+<div class="modal-overlay" id="requestModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">New Blood Request</div>
+      <button class="modal-close" onclick="closeModal('requestModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Patient Name *</label><input type="text" id="rName" placeholder="Patient's full name"></div>
+        <div class="form-group"><label>Blood Type *</label>
+          <select id="rBlood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+        </div>
+        <div class="form-group"><label>Units Required *</label><input type="number" id="rUnits" placeholder="e.g. 2" min="1"></div>
+        <div class="form-group"><label>Hospital</label><input type="text" id="rHospital" placeholder="Hospital name"></div>
+        <div class="form-group"><label>Contact Phone</label><input type="text" id="rPhone" placeholder="01XXXXXXXXX"></div>
+        <div class="form-group"><label>Priority</label>
+          <select id="rPriority"><option>Normal</option><option>Urgent</option><option>Emergency</option></select>
+        </div>
+        <div class="form-group full"><label>Notes</label><textarea id="rNotes" placeholder="Additional notes..." rows="2"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('requestModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRequest()">📋 Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stock Modal -->
+<div class="modal-overlay" id="stockModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Update Blood Stock</div>
+      <button class="modal-close" onclick="closeModal('stockModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Transaction Type</label>
+          <select id="sType"><option value="IN">Donation (IN)</option><option value="OUT">Issued (OUT)</option></select>
+        </div>
+        <div class="form-group"><label>Blood Type *</label>
+          <select id="sBlood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+        </div>
+        <div class="form-group"><label>Units *</label><input type="number" id="sUnits" placeholder="Number of units" min="1"></div>
+        <div class="form-group"><label>Donor/Patient Name</label><input type="text" id="sPerson" placeholder="Name"></div>
+        <div class="form-group full"><label>Notes</label><input type="text" id="sNotes" placeholder="Any notes..."></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('stockModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveStock()">✅ Update Stock</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE={
+  get(k){try{return JSON.parse(localStorage.getItem(k))||null;}catch{return null;}},
+  set(k,v){localStorage.setItem(k,JSON.stringify(v));}
+};
+
+function seedData(){
+  if(STORAGE.get('seeded'))return;
+  STORAGE.set('donors',[
+    {id:1,name:'Rahul Ahmed',blood:'A+',phone:'01711111111',age:28,email:'rahul@mail.com',address:'Dhaka',lastDonation:'2024-12-15',status:'Active'},
+    {id:2,name:'Fatima Khanam',blood:'B+',phone:'01722222222',age:24,email:'fatima@mail.com',address:'Chittagong',lastDonation:'2024-11-20',status:'Active'},
+    {id:3,name:'Karim Uddin',blood:'O+',phone:'01733333333',age:35,email:'karim@mail.com',address:'Sylhet',lastDonation:'2025-01-10',status:'Active'},
+    {id:4,name:'Nadia Islam',blood:'AB+',phone:'01744444444',age:29,email:'nadia@mail.com',address:'Rajshahi',lastDonation:'2024-10-05',status:'Inactive'},
+    {id:5,name:'Sumon Roy',blood:'A-',phone:'01755555555',age:32,email:'sumon@mail.com',address:'Dhaka',lastDonation:'2025-02-18',status:'Active'},
+    {id:6,name:'Rima Begum',blood:'O-',phone:'01766666666',age:26,email:'rima@mail.com',address:'Khulna',lastDonation:'2025-03-01',status:'Active'},
+  ]);
+  STORAGE.set('bloodStock',{A:20,Amin:8,B:15,Bmin:5,AB:10,ABmin:3,O:25,Omin:9});
+  STORAGE.set('requests',[
+    {id:1,patient:'Ibrahim Ali',blood:'A+',units:2,hospital:'Dhaka Medical',phone:'01777777777',priority:'Urgent',notes:'Surgery needed',date:'2025-04-28',status:'Pending'},
+    {id:2,patient:'Mina Akter',blood:'O+',units:1,hospital:'Square Hospital',phone:'01788888888',priority:'Normal',notes:'',date:'2025-04-25',status:'Approved'},
+    {id:3,patient:'Raju Hossain',blood:'B-',units:3,hospital:'Apollo Dhaka',phone:'01799999999',priority:'Emergency',notes:'Accident case',date:'2025-05-01',status:'Pending'},
+  ]);
+  STORAGE.set('history',[
+    {id:1,date:'2025-05-01',type:'IN',blood:'O+',units:2,person:'Karim Uddin',note:'Regular donation'},
+    {id:2,date:'2025-04-30',type:'OUT',blood:'A+',units:1,person:'Ibrahim Ali',note:'Surgery'},
+    {id:3,date:'2025-04-28',type:'IN',blood:'B+',units:2,person:'Fatima Khanam',note:'Camp donation'},
+  ]);
+  STORAGE.set('nextDonorId',7);
+  STORAGE.set('nextRequestId',4);
+  STORAGE.set('nextHistoryId',4);
+  STORAGE.set('seeded',true);
+}
+
+const USERS=[{u:'admin',p:'admin123',name:'Admin User'},{u:'staff',p:'staff123',name:'Staff'}];
+let currentUser=null,editingDonorId=null,currentPage='dashboard';
+
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value.trim();
+  const user=USERS.find(x=>x.u===u&&x.p===p);
+  if(user){
+    currentUser=user;
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    document.getElementById('sidebarName').textContent=user.name;
+    document.getElementById('sidebarAvatar').textContent=user.name[0];
+    seedData();renderAll();
+    showToast('success','✅ Welcome, '+user.name+'!');
+  }else{document.getElementById('loginError').style.display='block';}
+}
+document.getElementById('loginPass').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+
+function doLogout(){
+  currentUser=null;
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  showToast('success','👋 Logged out');
+}
+
+const pageTitles={dashboard:'Dashboard',donors:'Donor Management','blood-stock':'Blood Stock',requests:'Blood Requests',history:'Transaction History'};
+const pageActions={dashboard:'+ Add Donor',donors:'+ Add Donor','blood-stock':'+ Update Stock',requests:'+ New Request',history:''};
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>{if(el.getAttribute('onclick')===`showPage('${p}')`)el.classList.add('active');});
+  document.getElementById('pageTitle').textContent=pageTitles[p]||p;
+  const btn=document.getElementById('topActionBtn');
+  btn.textContent=pageActions[p]||'+ Add';
+  btn.style.display=pageActions[p]?'':'none';
+  currentPage=p;renderPage(p);
+}
+
+function openAddModal(){
+  if(currentPage==='donors'||currentPage==='dashboard')openDonorModal();
+  else if(currentPage==='blood-stock')openModal('stockModal');
+  else if(currentPage==='requests')openModal('requestModal');
+}
+
+const bloodTypes=[
+  {key:'A',label:'A+'},{key:'Amin',label:'A-'},
+  {key:'B',label:'B+'},{key:'Bmin',label:'B-'},
+  {key:'AB',label:'AB+'},{key:'ABmin',label:'AB-'},
+  {key:'O',label:'O+'},{key:'Omin',label:'O-'},
+];
+const maxUnits=50;
+
+function getStock(){return STORAGE.get('bloodStock')||{};}
+function totalUnits(s){return Object.values(s).reduce((a,b)=>a+b,0);}
+
+function bloodCardHTML(type,units,compact=false){
+  const pct=Math.min(100,Math.round((units/maxUnits)*100));
+  const col=units<5?'var(--red-light)':units<15?'var(--warning)':'var(--success)';
+  const sc=units<5?'badge-red':units<15?'badge-yellow':'badge-green';
+  const st=units<5?'Critical':units<15?'Low':'Good';
+  if(compact)return`<div class="blood-card" style="padding:12px;"><div class="blood-type" style="font-size:18px;">${type}</div><div class="blood-units" style="font-size:11px;"><span>${units}</span> units</div><div class="blood-bar"><div class="blood-fill" style="width:${pct}%;background:${col};"></div></div></div>`;
+  return`<div class="blood-card"><div class="blood-type">${type}</div><div class="blood-units"><span>${units}</span> units</div><div class="blood-bar"><div class="blood-fill" style="width:${pct}%;background:${col};"></div></div><div class="blood-status"><span class="badge ${sc}">${st}</span></div></div>`;
+}
+
+function statusBadge(s){
+  if(s==='Approved')return'<span class="badge badge-green">Approved</span>';
+  if(s==='Rejected')return'<span class="badge badge-red">Rejected</span>';
+  return'<span class="badge badge-yellow">Pending</span>';
+}
+
+function renderAll(){renderDashboard();renderDonors();renderBloodStock();renderRequests();renderHistory();}
+function renderPage(p){
+  if(p==='dashboard')renderDashboard();
+  else if(p==='donors')renderDonors();
+  else if(p==='blood-stock')renderBloodStock();
+  else if(p==='requests')renderRequests();
+  else if(p==='history')renderHistory();
+}
+
+function renderDashboard(){
+  const donors=STORAGE.get('donors')||[];
+  const stock=getStock();
+  const requests=STORAGE.get('requests')||[];
+  const history=STORAGE.get('history')||[];
+  const today=new Date().toISOString().slice(0,10);
+  const todayDons=history.filter(h=>h.date===today&&h.type==='IN');
+  document.getElementById('stat-donors').textContent=donors.length;
+  document.getElementById('stat-units').textContent=totalUnits(stock);
+  document.getElementById('stat-pending').textContent=requests.filter(r=>r.status==='Pending').length;
+  document.getElementById('stat-today').textContent=todayDons.reduce((a,h)=>a+h.units,0);
+  document.getElementById('dashBloodGrid').innerHTML=bloodTypes.map(t=>bloodCardHTML(t.label,stock[t.key]||0,true)).join('');
+  const reqs=requests.slice(-5).reverse();
+  document.getElementById('dashRequests').innerHTML=reqs.length?reqs.map(r=>`<tr><td>${r.patient}</td><td><span class="badge badge-red">${r.blood}</span></td><td>${statusBadge(r.status)}</td></tr>`).join(''):'<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">No requests</td></tr>';
+  document.getElementById('dashDonors').innerHTML=donors.slice(-5).reverse().map(d=>`<tr><td><strong>${d.name}</strong></td><td><span class="badge badge-red">${d.blood}</span></td><td>${d.lastDonation||'—'}</td><td><span class="badge ${d.status==='Active'?'badge-green':'badge-gray'}">${d.status}</span></td></tr>`).join('');
+}
+
+function renderDonors(){
+  const donors=STORAGE.get('donors')||[];
+  document.getElementById('donorCount').textContent=donors.length+' total';
+  document.getElementById('donorsTable').innerHTML=donors.length?donors.map((d,i)=>`<tr><td>${i+1}</td><td><strong>${d.name}</strong><br><span style="color:var(--muted);font-size:11px;">${d.email||''}</span></td><td><span class="badge badge-red">${d.blood}</span></td><td>${d.phone||'—'}</td><td>${d.lastDonation||'—'}</td><td><span class="badge ${d.status==='Active'?'badge-green':'badge-gray'}">${d.status}</span></td><td><div class="action-btns"><button class="btn btn-ghost btn-sm" onclick="editDonor(${d.id})">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteDonor(${d.id})">🗑️</button></div></td></tr>`).join(''):'<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">👥</div>No donors found</div></td></tr>';
+}
+
+function renderBloodStock(){
+  const stock=getStock();
+  document.getElementById('bloodStockGrid').innerHTML=bloodTypes.map(t=>bloodCardHTML(t.label,stock[t.key]||0)).join('');
+  const history=STORAGE.get('history')||[];
+  document.getElementById('stockTable').innerHTML=history.length?history.slice().reverse().map(h=>`<tr><td>${h.date}</td><td><span class="badge ${h.type==='IN'?'badge-green':'badge-red'}">${h.type==='IN'?'Donation':'Issued'}</span></td><td><span class="badge badge-red">${h.blood}</span></td><td>${h.units}</td><td>${h.person||'—'}</td><td>${h.note||'—'}</td></tr>`).join(''):'<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📦</div>No transactions</div></td></tr>';
+}
+
+function renderRequests(){
+  const requests=STORAGE.get('requests')||[];
+  document.getElementById('requestCount').textContent=requests.length+' total';
+  document.getElementById('requestsTable').innerHTML=requests.length?requests.slice().reverse().map((r,i)=>`<tr><td>${requests.length-i}</td><td><strong>${r.patient}</strong></td><td><span class="badge badge-red">${r.blood}</span></td><td>${r.units}</td><td>${r.hospital||'—'}</td><td>${r.date}</td><td>${statusBadge(r.status)}</td><td><div class="action-btns">${r.status==='Pending'?`<button class="btn btn-ghost btn-sm" onclick="approveRequest(${r.id})">✅</button><button class="btn btn-danger btn-sm" onclick="rejectRequest(${r.id})">❌</button>`:''}<button class="btn btn-danger btn-sm" onclick="deleteRequest(${r.id})">🗑️</button></div></td></tr>`).join(''):'<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div>No requests</div></td></tr>';
+}
+
+function renderHistory(){
+  const history=STORAGE.get('history')||[];
+  document.getElementById('historyTable').innerHTML=history.length?history.slice().reverse().map(h=>`<tr><td>${h.date}</td><td><span class="badge ${h.type==='IN'?'badge-green':'badge-red'}">${h.type}</span></td><td><span class="badge badge-red">${h.blood}</span></td><td>${h.units}</td><td>${h.person||'—'}</td><td>${h.note||'—'}</td></tr>`).join(''):'<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📜</div>No history</div></td></tr>';
+}
+
+function openDonorModal(id=null){
+  editingDonorId=id;
+  document.getElementById('donorModalTitle').textContent=id?'Edit Donor':'Add New Donor';
+  ['dName','dBlood','dPhone','dAge','dEmail','dLastDonation','dAddress'].forEach(f=>document.getElementById(f).value='');
+  if(id){
+    const d=(STORAGE.get('donors')||[]).find(x=>x.id===id);
+    if(d){document.getElementById('dName').value=d.name||'';document.getElementById('dBlood').value=d.blood||'';document.getElementById('dPhone').value=d.phone||'';document.getElementById('dAge').value=d.age||'';document.getElementById('dEmail').value=d.email||'';document.getElementById('dLastDonation').value=d.lastDonation||'';document.getElementById('dAddress').value=d.address||'';}
+  }
+  openModal('donorModal');
+}
+function editDonor(id){openDonorModal(id);}
+function saveDonor(){
+  const name=document.getElementById('dName').value.trim();
+  const blood=document.getElementById('dBlood').value;
+  if(!name||!blood){showToast('error','❌ Name and blood type are required');return;}
+  const donors=STORAGE.get('donors')||[];
+  if(editingDonorId){
+    const idx=donors.findIndex(d=>d.id===editingDonorId);
+    if(idx>-1)donors[idx]={...donors[idx],name,blood,phone:document.getElementById('dPhone').value,age:+document.getElementById('dAge').value,email:document.getElementById('dEmail').value,lastDonation:document.getElementById('dLastDonation').value,address:document.getElementById('dAddress').value};
+    showToast('success','✅ Donor updated!');
+  }else{
+    const id=STORAGE.get('nextDonorId')||1;
+    donors.push({id,name,blood,phone:document.getElementById('dPhone').value,age:+document.getElementById('dAge').value,email:document.getElementById('dEmail').value,lastDonation:document.getElementById('dLastDonation').value,address:document.getElementById('dAddress').value,status:'Active'});
+    STORAGE.set('nextDonorId',id+1);
+    showToast('success','✅ Donor added!');
+  }
+  STORAGE.set('donors',donors);closeModal('donorModal');renderAll();
+}
+function deleteDonor(id){
+  if(!confirm('Delete this donor?'))return;
+  STORAGE.set('donors',(STORAGE.get('donors')||[]).filter(d=>d.id!==id));
+  renderAll();showToast('success','🗑️ Donor deleted');
+}
+
+function saveRequest(){
+  const patient=document.getElementById('rName').value.trim();
+  const blood=document.getElementById('rBlood').value;
+  const units=+document.getElementById('rUnits').value;
+  if(!patient||!blood||!units){showToast('error','❌ Please fill required fields');return;}
+  const requests=STORAGE.get('requests')||[];
+  const id=STORAGE.get('nextRequestId')||1;
+  requests.push({id,patient,blood,units,hospital:document.getElementById('rHospital').value,phone:document.getElementById('rPhone').value,priority:document.getElementById('rPriority').value,notes:document.getElementById('rNotes').value,date:new Date().toISOString().slice(0,10),status:'Pending'});
+  STORAGE.set('requests',requests);STORAGE.set('nextRequestId',id+1);
+  closeModal('requestModal');renderAll();showToast('success','📋 Request submitted!');
+}
+function approveRequest(id){
+  const requests=STORAGE.get('requests')||[];
+  const req=requests.find(r=>r.id===id);
+  if(!req)return;
+  const stock=getStock();
+  const key=bloodTypes.find(t=>t.label===req.blood)?.key;
+  if(key){
+    if((stock[key]||0)<req.units){showToast('error','❌ Insufficient stock for '+req.blood);return;}
+    stock[key]=(stock[key]||0)-req.units;STORAGE.set('bloodStock',stock);
+    const history=STORAGE.get('history')||[];
+    const hid=STORAGE.get('nextHistoryId')||1;
+    history.push({id:hid,date:new Date().toISOString().slice(0,10),type:'OUT',blood:req.blood,units:req.units,person:req.patient,note:'Request approved'});
+    STORAGE.set('history',history);STORAGE.set('nextHistoryId',hid+1);
+  }
+  req.status='Approved';STORAGE.set('requests',requests);renderAll();showToast('success','✅ Request approved!');
+}
+function rejectRequest(id){
+  const requests=STORAGE.get('requests')||[];
+  const req=requests.find(r=>r.id===id);
+  if(req){req.status='Rejected';STORAGE.set('requests',requests);renderAll();showToast('success','Request rejected');}
+}
+function deleteRequest(id){
+  if(!confirm('Delete this request?'))return;
+  STORAGE.set('requests',(STORAGE.get('requests')||[]).filter(r=>r.id!==id));
+  renderAll();showToast('success','🗑️ Deleted');
+}
+
+function saveStock(){
+  const type=document.getElementById('sType').value;
+  const blood=document.getElementById('sBlood').value;
+  const units=+document.getElementById('sUnits').value;
+  if(!blood||!units){showToast('error','❌ Blood type and units required');return;}
+  const key=bloodTypes.find(t=>t.label===blood)?.key;
+  if(!key){showToast('error','Invalid blood type');return;}
+  const stock=getStock();
+  if(type==='IN'){stock[key]=(stock[key]||0)+units;}
+  else{if((stock[key]||0)<units){showToast('error','❌ Not enough stock');return;}stock[key]=(stock[key]||0)-units;}
+  STORAGE.set('bloodStock',stock);
+  const history=STORAGE.get('history')||[];
+  const hid=STORAGE.get('nextHistoryId')||1;
+  history.push({id:hid,date:new Date().toISOString().slice(0,10),type,blood,units,person:document.getElementById('sPerson').value,note:document.getElementById('sNotes').value});
+  STORAGE.set('history',history);STORAGE.set('nextHistoryId',hid+1);
+  closeModal('stockModal');renderAll();showToast('success','✅ Stock updated!');
+}
+
+function handleSearch(){
+  const q=document.getElementById('globalSearch').value.toLowerCase();
+  if(currentPage==='donors'){
+    const donors=STORAGE.get('donors')||[];
+    const filtered=donors.filter(d=>d.name.toLowerCase().includes(q)||d.blood.toLowerCase().includes(q)||(d.phone||'').includes(q));
+    document.getElementById('donorsTable').innerHTML=filtered.map((d,i)=>`<tr><td>${i+1}</td><td><strong>${d.name}</strong></td><td><span class="badge badge-red">${d.blood}</span></td><td>${d.phone||'—'}</td><td>${d.lastDonation||'—'}</td><td><span class="badge ${d.status==='Active'?'badge-green':'badge-gray'}">${d.status}</span></td><td><div class="action-btns"><button class="btn btn-ghost btn-sm" onclick="editDonor(${d.id})">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteDonor(${d.id})">🗑️</button></div></td></tr>`).join('');
+  }
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+
+function showToast(type,msg){
+  const t=document.createElement('div');
+  t.className='toast '+type;t.innerHTML=msg;
+  const c=document.getElementById('toastContainer');c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300);},3000);
+}
+</script>
+</body>
+</html>
